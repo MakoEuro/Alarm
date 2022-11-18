@@ -15,13 +15,22 @@ function sleep(duration) {
     })
 }
 
-const alarm = new Audio('./assets/audio/alarm.[ADD FORMAT]');
-start.type = 'audio/wav';
-
-const clock = select('.clock');
+const clock = select('clock');
+const time = select('.time');
+const alarmTime = select('.alarm-time');
 const btn = select('.btn');
-const alarmSet = select('.alarm-set');
+const alarmSet = select('.alarmSet');
 
-onEvent('click', btn, function() {
+const today = new Date();
+let hh = today.getHours();
+let mm = today.getMinutes();
+let ss = today.getSeconds();
+
+
+console.log(clock);
+// clock.innerText =  hh + ":" + mm + ":" + ss;
+
+
+// onEvent('click', btn, function() {
     
-});
+// });
