@@ -24,7 +24,7 @@ const alarmSet = select('.alarmSet');
 const msg = select('.msg');
 
 // Creates function for current time
-function currentTime () {
+function currentTime() {
     const today = new Date();
     let hh = today.getHours();
     let mm = today.getMinutes();
@@ -33,13 +33,14 @@ function currentTime () {
     ss = checkZero(ss);
 
     clock.innerText =  hh + ':' + mm + ':' + ss;
-    let t = setTimeout(function(){ currentTime() }, 1000);
+    let time = setTimeout(function(){ currentTime() }, 1000);
+    return today;
 }
 
 // This function will add a zero to any number that is a single digit.
 function checkZero(i) {
     if (i < 10) {
-        i = '0' + i
+        i = '0' + i;
     }
     return i;
 }
@@ -71,6 +72,8 @@ function setAlarm() {
 
 onEvent('click', btn, function() {
     setAlarm();
+    alarmRing();
+    sound();
 });
 
 let ring = false;
@@ -79,7 +82,7 @@ function alarmRing() {
     let alarmValue = setAlarm();
 
     function ringAlarm() {
-        let currentTime = Number(localTime());
+        let currentTime = Number(currentTime());
         if (currentTime >= alarmValue) {
             console.log('Alarm has rung.');
             ring = true;
