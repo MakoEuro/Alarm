@@ -155,3 +155,7 @@ input[type=button] {
 .small-clock {
     font-size: 2vw;
 }
+
+.msg {
+    font-size: 1.4vw;
+}
