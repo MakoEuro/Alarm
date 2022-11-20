@@ -73,7 +73,7 @@ onEvent('click', btn, function() {
     setAlarm();
 });
 
-let ring = flase;
+let ring = false;
 function alarmRing() {
 
     let alarmValue = setAlarm();
@@ -90,4 +90,13 @@ function alarmRing() {
     let interval = setInterval(ringAlarm, 1000);
 }
 
+const alarmSound = new Audio('./assets/audio/alarm.wav');
+alarmSound.type = 'audio/wav';
+alarmSound.preload = 'auto';
 
+function sound() {
+    if(ring) {
+        alarmSound.play();
+    }
+    let soundInterval = setInterval(sound, 500);
+}
