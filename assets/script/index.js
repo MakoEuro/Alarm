@@ -29,10 +29,19 @@ function currentTime() {
     let hh = today.getHours();
     let mm = today.getMinutes();
     let ss = today.getSeconds();
+    let amPm = 'AM';
     mm = checkZero(mm);
     ss = checkZero(ss);
 
-    clock.innerText =  hh + ':' + mm + ':' + ss;
+    if(hh == 0) {
+        hh = 12;
+    } else if (hh > 12) {
+        hh = hh - 12;
+        amPm = 'PM';
+    }
+
+
+    clock.innerText =  hh + ':' + mm + ':' + ss + ' ' + amPm;;
     let time = setTimeout(function(){ currentTime() }, 1000);
     return today;
 }
@@ -67,23 +76,31 @@ function setAlarm() {
         minute: '2-digit'
     });
 
-    return alarmTime;
+    return alarmQueue;
+}
+
+function alarmActive() {
+    let val = setAlarm();
+    let alarmVal = val.getTime();
+
+    return alarmVal;
 }
 
 onEvent('click', btn, function() {
     setAlarm();
     alarmRing();
     sound();
+    console.log('Alarm set');
 });
 
 let ring = false;
 function alarmRing() {
+    let alarmVal = alarmActive();
 
-    let alarmValue = setAlarm();
-
+    // Sets alarm to ring when clock reaches time
     function ringAlarm() {
-        let currentTime = Number(currentTime());
-        if (currentTime >= alarmValue) {
+        let currentT = Number(currentTime());
+        if (currentT >= alarmVal) {
             console.log('Alarm has rung.');
             ring = true;
             clearInterval(interval);
@@ -95,11 +112,10 @@ function alarmRing() {
 
 const alarmSound = new Audio('./assets/audio/alarm.wav');
 alarmSound.type = 'audio/wav';
-alarmSound.preload = 'auto';
 
 function sound() {
     if(ring) {
         alarmSound.play();
+        console.log('Sound played');
     }
-    let soundInterval = setInterval(sound, 500);
 }
