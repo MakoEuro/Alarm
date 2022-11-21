@@ -40,7 +40,6 @@ function currentTime() {
         amPm = 'PM';
     }
 
-
     clock.innerText =  hh + ':' + mm + ':' + ss + ' ' + amPm;;
     let time = setTimeout(function(){ currentTime() }, 1000);
     return today;
@@ -91,6 +90,8 @@ onEvent('click', btn, function() {
     alarmRing();
     sound();
     console.log('Alarm set');
+
+    alarmSound.play();
 });
 
 let ring = false;
@@ -107,7 +108,7 @@ function alarmRing() {
         }
     }
 
-    let interval = setInterval(ringAlarm, 1000);
+    let interval = setInterval(ringAlarm(), 1000);
 }
 
 const alarmSound = new Audio('./assets/audio/alarm.wav');
